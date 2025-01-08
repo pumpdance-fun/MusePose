@@ -1,7 +1,7 @@
 torch==2.0.1
 torchdiffeq==0.2.3
 torchmetrics==1.2.1
-torchsde==0.2.5
+torchsde
 torchvision==0.15.2
 accelerate==0.29.3
 av==11.0.0

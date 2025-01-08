@@ -29,8 +29,8 @@ from musepose.utils.util import get_fps, read_frames, save_videos_grid
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--config", type=str, default="./configs/test_stage_2.yaml")
-    parser.add_argument("-W", type=int, default=768, help="Width")
-    parser.add_argument("-H", type=int, default=768, help="Height")
+    parser.add_argument("-W", type=int, default=512, help="Width")
+    parser.add_argument("-H", type=int, default=512, help="Height")
     parser.add_argument("-L", type=int, default=300, help="video frame length")
     parser.add_argument("-S", type=int, default=48,  help="video slice frame number")
     parser.add_argument("-O", type=int, default=4,   help="video slice overlap frame number")
