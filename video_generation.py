@@ -359,6 +359,7 @@ class VideoGenerator:
         print("total_frame:", total_frame)
 
         refer_img = cv2.imread(image_path)
+        self.args["detect_resolution"] = refer_img.shape[1]
 
         H_in, W_in  = height, width
         H_out, W_out = size_calculate(H_in,W_in,self.args["detect_resolution"]) 
@@ -371,7 +372,7 @@ class VideoGenerator:
         output_refer = cv2.cvtColor(output_refer, cv2.COLOR_RGB2BGR)
 
         skip_frames = self.args["align_frame"]
-        max_frame = int(total_frame)
+        max_frame = min(self.args["max_frame"], int(total_frame))
         pose_list, video_frame_buffer, video_pose_buffer = [], [], []
 
         for i in range(max_frame):
@@ -590,6 +591,9 @@ class VideoGenerator:
         pose_list = []
         pose_tensor_list = []
         pose_images = read_frames(pose_video_path)
+        # pose_size = np.array(pose_images[0]).shape
+        # width = int(height * pose_size[1] / pose_size[0])
+        # print("width:", width, "height:", height)
         src_fps = get_fps(pose_video_path)
         print(f"pose video has {len(pose_images)} frames, with {src_fps} fps")
         L = min(self.args["L"], len(pose_images))
@@ -667,11 +671,11 @@ if __name__ == '__main__':
         "dwpose_config": "./pose/config/dwpose-l_384x288.py",
         "dwpose_ckpt": "./pretrained_weights/dwpose/dw-ll_ucoco_384.pth",
         "align_frame": 0,
-        "max_frame": 300,
+        "max_frame": 100,
         "detect_resolution": 512,
         "image_resolution": 720,
-        "H": 512,
-        "W": 512,
+        "H": 256,
+        "W": 256,
         "L": 300,
         "S": 48,
         "O": 4,
@@ -683,5 +687,5 @@ if __name__ == '__main__':
 
     }
     video_generator = VideoGenerator(args)
-    video_generator("./assets/images/ref.png", "./assets/videos/dance.mp4")
+    video_generator("./assets/images/ai16z.png", "./assets/videos/hiphop.mp4")
     # video_generator.align_video("./assets/images/ref.png", "./assets/videos/dance.mp4")
